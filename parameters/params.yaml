@@ -1,8 +1,7 @@
-API_URL: str = 'https://api.telegram.org/bot'
-BOT_TOKEN: str = '5940850106:AAEN0Wkv7DDo16NgJJL_z18rGtPYB7AF-Wc'
-TEXT: str = 'Ничёси! Классный апдейт!'
-MAX_COUNTER: int = 100
+API_URL: 'https://api.telegram.org/bot'
+BOT_TOKEN: '5940850106:AAEN0Wkv7DDo16NgJJL_z18rGtPYB7AF-Wc'
+TEXT: 'Ничёси! Классный апдейт!'
+MAX_COUNTER: 100
 
-offset: int = -2
-counter: int = 0
-chat_id: int
+offset: -2
+counter: 0
