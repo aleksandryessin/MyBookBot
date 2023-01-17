@@ -47,10 +47,13 @@ def main1(params):
 
 def main2(params):
 
-
+    """
+    Не проблема - вот API с собачками: https://random.dog/woof.json \
+                вот с лисичками: https://randomfox.ca/floof/
+    """
     API_URL = params['API_URL']
-    API_CATS_URL = params['API_CATS_URL']
     BOT_TOKEN = params['BOT_TOKEN']
+    API_CATS_URL = params['API_CATS_URL']
     ERROR_TEXT = params['ERROR_TEXT']
 
     offset: int = -2
@@ -78,5 +81,29 @@ def main2(params):
         counter += 1
 
 
+def main3(params):
+    API_URL = params['API_URL']
+    BOT_TOKEN = params['BOT_TOKEN']
+    offset: int = -2
+    timeout: int = 60
+    updates: dict
+
+
+    def do_something() -> None:
+        print('Был апдейт')
+
+
+    while True:
+        start_time = time.time()
+        updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}&timeout={timeout}').json()
+
+        if updates['result']:
+            for result in updates['result']:
+                offset = result['update_id']
+                do_something()
+
+        end_time = time.time()
+        print(f'Время между запросами к Telegram Bot API: {end_time - start_time}')
+
 if __name__=="__main__":
-    main2(params)
+    main3(params)
