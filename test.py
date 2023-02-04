@@ -1,5 +1,6 @@
 import requests
 import time
+import os
 
 from src.load import load_params
 
@@ -9,20 +10,11 @@ params = load_params()
 Задавая параметры через yaml-file мы исключаем возможность задавать тип переменной.
 Поэтому целесоорбразнее делать это через переменный (или классы как ниже)
 """
-# API_URL: str = 'https://api.telegram.org/bot'
-# BOT_TOKEN: str = '5940850106:AAEN0Wkv7DDo16NgJJL_z18rGtPYB7AF-Wc'
-# TEXT: str = 'Ничёси! Классный апдейт!'
-# MAX_COUNTER: int = 100
-
-# offset: int = -2
-# counter: int = 0
-
-
 
 def main1(params):
 
     API_URL = params['API_URL']
-    BOT_TOKEN = params['BOT_TOKEN']
+    BOT_TOKEN = os.getenv('API_TOKEN')
     TEXT = params['TEXT']
     MAX_COUNTER = params['MAX_COUNTER']
 

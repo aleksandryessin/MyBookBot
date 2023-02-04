@@ -2,12 +2,14 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import Message, ContentType
 
+import os
+
 from src.load import load_params
 
 params = load_params()
 
 # Вместо BOT TOKEN HERE нужно вставить токен вашего бота, полученный у @BotFather
-API_TOKEN = params['BOT_TOKEN']
+API_TOKEN = os.getenv('API_TOKEN')
 
 # Создаем объекты бота и диспетчера
 bot: Bot = Bot(token=API_TOKEN)
