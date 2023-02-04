@@ -1,4 +1,6 @@
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, F
+from aiogram.filters import Command
+from aiogram.types import Message, ContentType
 
 from src.load import load_params
 
@@ -9,26 +11,40 @@ API_TOKEN = params['BOT_TOKEN']
 
 # Создаем объекты бота и диспетчера
 bot: Bot = Bot(token=API_TOKEN)
-dp: Dispatcher = Dispatcher(bot)
-
+dp: Dispatcher = Dispatcher()
 
 # Этот хэндлер будет срабатывать на команду "/start"
-@dp.message_handler(commands=['start'])
-async def process_start_command(message: types.Message):
+async def process_start_command(message: Message):
     await message.answer('Привет!\nМеня зовут Эхо-бот!\nНапиши мне что-нибудь')
 
 
 # Этот хэндлер будет срабатывать на команду "/help"
-@dp.message_handler(commands=['help'])
-async def process_help_command(message: types.Message):
-    await message.answer('Напиши мне что-нибудь и в ответ я пришлю тебе твое сообщение')
+async def process_help_command(message: Message):
+    await message.answer('Напиши мне что-нибудь и в ответ '
+                        'я пришлю тебе твое сообщение')
 
 
-# Этот хэндлер будет срабатывать на любые ваши текстовые сообщения, кроме команд "/start" и "/help"
-@dp.message_handler()
-async def send_echo(message: types.Message):
-    await message.reply(message.text)
+# Этот хэндлер будет срабатывать на любые ваши сообщения,
+# кроме команд "/start" и "/help"
+@dp.message()
+async def send_echo(message: Message):
+    try:
+        await message.send_copy(chat_id=message.chat.id)
+        print(message.json(indent=4, exclude_none=True))
+        print(message.json(indent=4, exclude_none=True)[-1])
+    except TypeError:
+        await message.reply(text='Данный тип апдейтов не поддерживается '
+                                'методом send_copy')
+
+
+# Навешиваем декоратор без фильтров, чтобы ловить любой тип апдейтов
+@dp.message()
+async def process_any_update(message: Message):
+    # Выводим апдейт в терминал
+    print(message)
+    # Отправляем сообщение в чат, откуда пришел апдейт
+    await message.answer(text='Вы что-то прислали')
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    dp.run_polling(bot)
