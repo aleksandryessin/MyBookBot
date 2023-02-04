@@ -1,5 +1,4 @@
 API_URL: 'https://api.telegram.org/bot'
-BOT_TOKEN: '5940850106:AAEN0Wkv7DDo16NgJJL_z18rGtPYB7AF-Wc'
 TEXT: 'Ничёси! Классный апдейт!'
 MAX_COUNTER: 100
 API_CATS_URL: 'https://aws.random.cat/meow'

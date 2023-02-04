@@ -1,4 +1,6 @@
 import random
+import os
+
 
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message
@@ -9,7 +11,11 @@ from src.load import load_params
 params = load_params()
 
 # Вместо BOT TOKEN HERE нужно вставить токен вашего бота, полученный у @BotFather
-API_TOKEN = params['BOT_TOKEN']
+
+# from decouple import config
+# config('API_TOKEN')
+
+API_TOKEN = os.getenv('API_TOKEN')
 
 # Создаем объекты бота и диспетчера
 bot: Bot = Bot(token=API_TOKEN)
